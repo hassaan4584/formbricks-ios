@@ -15,7 +15,8 @@ final class PresentSurveyManager {
     /// Walks the active presentation/navigation/tab hierarchy and returns the leaf VC.
     /// Mirrors UIKit's own `presentedViewController` traversal so a single walker is enough.
     private func topMostViewController(from viewController: UIViewController) -> UIViewController {
-        if let presented = viewController.presentedViewController {
+        if let presented = viewController.presentedViewController,
+           !presented.isBeingDismissed {
             return topMostViewController(from: presented)
         }
         if let navigation = viewController as? UINavigationController,
